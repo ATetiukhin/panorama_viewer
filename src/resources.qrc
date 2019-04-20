@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+  <file>assets/app.qml</file>
+
+  <file>assets/texture.frag</file>
+  <file>assets/texture.vert</file>
+</qresource>
+</RCC>
