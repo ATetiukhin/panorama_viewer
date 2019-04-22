@@ -9,11 +9,15 @@
 
 namespace
 {
-    GLfloat constexpr coords[4][3] = {
-        { +1, -1, -1 },
-        { -1, -1, -1 },
-        { -1, +1, -1 },
-        { +1, +1, -1 },
+    // row: vertex position (vec3) texture coordinate (vec2)
+    GLfloat constexpr coords[][5] = {
+        { +0.5, -0.5, 0.0, 1, 1 },
+        { -0.5, -0.5, 0.0, 0, 1 },
+        { -0.5, +0.5, 0.0, 0, 0 },
+
+        { -0.5, +0.5, 0.0, 0, 0 },
+        { +0.5, +0.5, 0.0, 1, 0 },
+        { +0.5, -0.5, 0.0, 1, 1 },
     };
 
     void init(QOpenGLShaderProgram *& shader_program)
@@ -45,17 +49,8 @@ opengl_render_node_t::opengl_render_node_t(QQuickItem * const item)
     , shader_program_(nullptr)
     , texture_(nullptr)
     , vbo_(new QOpenGLBuffer)
+    , matrix_uniform_(-1)
 {
-    for (int j = 0; j < 4; ++j) {
-        // vertex position
-        vertex_data_.append(coords[j][0]);
-        vertex_data_.append(coords[j][1]);
-        vertex_data_.append(coords[j][2]);
-
-        // texture coordinate
-        vertex_data_.append(j == 0 || j == 3);
-        vertex_data_.append(j == 0 || j == 1);
-    }
 }
 
 opengl_render_node_t::~opengl_render_node_t()
@@ -75,15 +70,21 @@ void opengl_render_node_t::releaseResources()
     texture_ = nullptr;
 }
 
-void opengl_render_node_t::render(RenderState const * const /*state*/)
+void opengl_render_node_t::render(RenderState const * const state)
 {
     if (!shader_program_)
+    {
         ::init(shader_program_);
+        matrix_uniform_ = shader_program_->uniformLocation("matrix");
+    }
 
     QOpenGLFunctions * const f = QOpenGLContext::currentContext()->functions();
 
     if (!image_.isNull()) {
         make_object();
+
+        shader_program_->bind();
+        shader_program_->setUniformValue(matrix_uniform_, *state->projectionMatrix() * *matrix());
 
         shader_program_->enableAttributeArray(0);
         shader_program_->enableAttributeArray(1);
@@ -91,9 +92,7 @@ void opengl_render_node_t::render(RenderState const * const /*state*/)
         shader_program_->setAttributeBuffer(0, GL_FLOAT, 0, 3, 5 * sizeof(GLfloat));
         shader_program_->setAttributeBuffer(1, GL_FLOAT, 3 * sizeof(GLfloat), 2, 5 * sizeof(GLfloat));
 
-        shader_program_->bind();
-
-        f->glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        f->glDrawArrays(GL_TRIANGLES, 0, sizeof(coords) / sizeof(coords[0]));
     }
 }
 
@@ -126,8 +125,7 @@ void opengl_render_node_t::make_object()
     texture_->setWrapMode(QOpenGLTexture::Repeat);
     texture_->bind();
 
-    vbo_->release();
     vbo_->create();
     vbo_->bind();
-    vbo_->allocate(vertex_data_.constData(), vertex_data_.count() * sizeof(GLfloat));
+    vbo_->allocate(coords, sizeof(coords));
 }

@@ -25,12 +25,12 @@ struct opengl_render_node_t final : QSGRenderNode
 private:
     void make_object();
 
-    QVector<GLfloat> vertex_data_;
     QImage image_;
-
     QQuickItem * item_;
 
     QOpenGLShaderProgram * shader_program_;
     QOpenGLTexture * texture_;
     QOpenGLBuffer * vbo_;
+
+    int matrix_uniform_;
 };
