@@ -7,6 +7,16 @@ Item {
     Rectangle {
         anchors.fill: parent
 
+        MouseArea {
+            anchors.fill: parent
+
+            onWheel: {
+                if (wheel.modifiers & Qt.ControlModifier) {
+
+                }
+            }
+        }
+
         gradient: Gradient {
             GradientStop {
                 position: 0;
@@ -41,7 +51,6 @@ Item {
         }
 
         Text {
-            id: label
             color: "Silver"
             wrapMode: Text.WordWrap
             text: "Open file"
@@ -52,7 +61,6 @@ Item {
             anchors.margins: 20
 
             MouseArea {
-                id: myMouseId
                 anchors.fill: parent
                 onClicked: {
                     fileDialog.open()
