@@ -23,8 +23,8 @@ struct opengl_render_node_t final : QSGRenderNode
 
 private:
     void make_texture();
-    QMatrix4x4 const& projection_matrix();
-    QMatrix4x4 const& model_view_matrix();
+    QMatrix4x4 const & projection_matrix();
+    QMatrix4x4 const & model_view_matrix();
 
     QQuickItem * item_;
 

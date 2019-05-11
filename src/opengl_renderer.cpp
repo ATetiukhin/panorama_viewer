@@ -18,7 +18,8 @@ namespace
         { +1, +1, -1 },
     };
 
-    template <typename T> int sgn(T val)
+    template <typename T>
+    int sgn(T val)
     {
         return (T(0) < val) - (val < T(0));
     }
@@ -149,7 +150,7 @@ void opengl_render_node_t::set_zoom(int const zoom)
     z_ = qBound(y0, z_, y1);
 }
 
-void opengl_render_node_t::set_move(QPoint const& delta)
+void opengl_render_node_t::set_move(QPoint const & delta)
 {
     float constexpr coefficient_move = 1.0f / 50.f;
 
@@ -173,7 +174,7 @@ void opengl_render_node_t::make_texture()
     vbo_->allocate(vertex_data_.constData(), vertex_data_.count() * sizeof(GLfloat));
 }
 
-QMatrix4x4 const& opengl_render_node_t::projection_matrix()
+QMatrix4x4 const & opengl_render_node_t::projection_matrix()
 {
     qreal const width = item_->width();
     qreal const height = item_->height();
@@ -186,7 +187,7 @@ QMatrix4x4 const& opengl_render_node_t::projection_matrix()
     return projection_matrix_;
 }
 
-QMatrix4x4 const& opengl_render_node_t::model_view_matrix()
+QMatrix4x4 const & opengl_render_node_t::model_view_matrix()
 {
     model_view_matrix_.setToIdentity();
     model_view_matrix_.lookAt(camera.eye, camera.at, camera.up);

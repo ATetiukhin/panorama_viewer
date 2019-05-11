@@ -22,7 +22,8 @@ QSGNode * quick_view_t::updatePaintNode(QSGNode * node, UpdatePaintNodeData *)
     return render_node;
 }
 
-void quick_view_t::wheelEvent(QWheelEvent * const event) {
+void quick_view_t::wheelEvent(QWheelEvent * const event)
+{
 
     QPoint const number_degrees = event->angleDelta() / 8;
     if (active_node_ && !number_degrees.isNull()) {
