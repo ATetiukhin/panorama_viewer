@@ -14,7 +14,6 @@ install:
   - sudo apt-get -y install qt59base qt59declarative
   - . /opt/qt*/bin/qt*-env.sh || true
 
-
 script:
   - mkdir build && cd build
   - cmake ..

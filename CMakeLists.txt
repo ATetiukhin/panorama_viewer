@@ -41,6 +41,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Qml Quick Core)
+find_package(Qt5 REQUIRED COMPONENTS Core Qml Quick OpenGL)
 
 add_subdirectory(src)

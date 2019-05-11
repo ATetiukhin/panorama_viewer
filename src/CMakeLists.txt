@@ -3,6 +3,12 @@ cmake_minimum_required(VERSION 3.9.2 FATAL_ERROR)
 set(APP_NAME panorama_viewer)
 
 set(ALL_FILES
+  quick_view.cpp
+  quick_view.h
+
+  opengl_renderer.cpp
+  opengl_renderer.h
+
   main.cpp
 )
 
@@ -12,12 +18,13 @@ elseif (APPLE)
   set(GUI_TYPE MACOSX_BUNDLE)
 endif ()
 
-add_executable(${APP_NAME} ${GUI_TYPE} ${ALL_FILES})
+add_executable(${APP_NAME} ${GUI_TYPE} ${ALL_FILES} resources.qrc)
 target_link_libraries(${APP_NAME}
   PRIVATE
     Qt5::Core
     Qt5::Qml
     Qt5::Quick
+    Qt5::OpenGL
 )
 
 if (WIN32)
