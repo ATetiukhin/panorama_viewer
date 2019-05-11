@@ -7,16 +7,6 @@ Item {
     Rectangle {
         anchors.fill: parent
 
-        MouseArea {
-            anchors.fill: parent
-
-            onWheel: {
-                if (wheel.modifiers & Qt.ControlModifier) {
-
-                }
-            }
-        }
-
         gradient: Gradient {
             GradientStop {
                 position: 0;

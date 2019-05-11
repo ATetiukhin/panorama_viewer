@@ -3,11 +3,11 @@
 attribute highp vec4 vertex;
 attribute mediump vec4 tex_coord;
 
-uniform highp mat4 matrix;
 varying mediump vec4 texc;
+uniform mediump mat4 matrix;
 
 void main(void)
 {
-    gl_Position = vertex;
+    gl_Position = matrix * vertex;
     texc = tex_coord;
 }
