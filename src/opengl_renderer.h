@@ -2,12 +2,14 @@
 
 #include <qsgrendernode.h>
 
+#include <QImage>
+
+QT_BEGIN_NAMESPACE
 class QQuickItem;
 class QOpenGLTexture;
 class QOpenGLShaderProgram;
 class QOpenGLBuffer;
-
-#include <QImage>
+QT_END_NAMESPACE
 
 struct opengl_render_node_t final : QSGRenderNode
 {
